@@ -2,7 +2,9 @@ import java.net.*;
 import java.util.Scanner;
 
 // El servidor s'encarregara d'executar un canvi de temperatura de Fahrenheit a Celsius i mostrara la mitjana de temperatura en Celsius
-public class Client {
+
+public class client {
+
     // Rebem primer la IP del servidor i després el port.
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
