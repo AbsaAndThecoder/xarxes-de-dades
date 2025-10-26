@@ -47,8 +47,8 @@ public class client {
             socket.receive(answerPackage);
             String resposta = new String(answerPackage.getData(), 0, answerPackage.getLength());
             System.out.println("Resposta del servidor: " + resposta);
-        } catch (SocketTimeoutException e) {
-            throw new java.net.SocketTimeoutException("No s'ha rebut resposta del servidor."); // error al no connectar el sevidor
+        } catch (java.net.SocketTimeoutException e) {
+            throw new Exception("No s'ha rebut resposta del servidor."); // error al no connectar el sevidor
             //System.out.println(e.getMessage());
         }
 

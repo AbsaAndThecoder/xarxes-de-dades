@@ -3,9 +3,9 @@ import java.net.*;
 public class Server{
     private static final int[] temp = new int[10];
     private static int counter = 0;
-    public static void main(String args[])throws exception{
+    public static void main(String args[])throws Exception{
         //servidor que s'encarregara de realitzar un canvi de temperatures F to C
-        if(args.lenght != 1){
+        if(args.length != 1){
             System.out.println("In: java Servidor <port>");
             return;
         }
@@ -14,7 +14,7 @@ public class Server{
         //verificacio 
         try{
             port = Integer.parseInt(args[0]);
-        }catch (NumberFormatException){
+        }catch (NumberFormatException e){
             System.out.println("Error: port ha de ser enter");
         }
 
@@ -24,7 +24,7 @@ public class Server{
 
         System.out.println("Servidor escoltant pel port" + port );
         while(true){
-            DatagramPacket entryPackage = new DatagramPacket(buffer, buffer.lenght);
+            DatagramPacket entryPackage = new DatagramPacket(buffer, buffer.length);
             socket.receive(entryPackage);
             System.out.println("Paquet rebut");
 
@@ -90,7 +90,7 @@ public class Server{
             DatagramPacket paquetSortida = new DatagramPacket(respostaBytes, respostaBytes.length, adrecaClient, portClient); //lo que se envia al cliente
             socket.send(paquetSortida);
 
-            System.out.println("Resposta enviada satisfactoriament")
+            System.out.println("Resposta enviada satisfactoriament");
         }
         
     }
