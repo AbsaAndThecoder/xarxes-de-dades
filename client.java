@@ -20,6 +20,16 @@ public class client {
          socket.setSoTimeout(5000); 
 
         // Llegim un valor per enviar (demo)
+        /*
+             Scanner scanner = new Scanner(System.in);
+            System.out.print("Envia un valor (ex: temperatura en Fahrenheit): ");
+             String valor = scanner.nextLine();
+          while(true){
+            byte[] enviat = valor.getBytes();
+            DatagramPacket sentPackage = new DatagramPacket(enviat, enviat.length, ipServidor, port);
+            socket.send(sentPackage);
+            enviat += int*enviat
+         */
         Scanner scanner = new Scanner(System.in);
         System.out.print("Envia un valor (ex: temperatura en Fahrenheit): ");
         String valor = scanner.nextLine();
@@ -28,7 +38,7 @@ public class client {
         DatagramPacket sentPackage = new DatagramPacket(enviat, enviat.length, ipServidor, port);
         socket.send(sentPackage);
 
-        // Esperem la resposta
+        // Comprovacio/espera de respota del servidor al client
         byte[] buffer = new byte[1024];
         DatagramPacket answerPackage = new DatagramPacket(buffer, buffer.length);
         try {
@@ -36,7 +46,7 @@ public class client {
             String resposta = new String(answerPackage.getData(), 0, answerPackage.getLength());
             System.out.println("Resposta del servidor: " + resposta);
         } catch (java.net.SocketTimeoutException e) {
-            System.out.println("No s'ha rebut resposta del servidor (timeout).");
+            throw new Exception("No s'ha rebut resposta del servidor."); // error al no connectar el sevidor
         }
 
         socket.close();
