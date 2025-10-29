@@ -1,8 +1,9 @@
 import java.net.*;
+import java.io.*;
 
 public class Server{
     private static final int[] temp = new int[10];
-    private static int counter = 0;
+    private static int comptador = 0;
     public static void main(String args[])throws Exception{
         //servidor que s'encarregara de realitzar un canvi de temperatures F to C
         if(args.length != 1){
@@ -10,14 +11,19 @@ public class Server{
             return;
         }
 
-        int port;
+        int port = -1;
         //verificacio 
         try{
             port = Integer.parseInt(args[0]);
         }catch (NumberFormatException e){
             System.out.println("Error: port ha de ser enter");
+            return;
         }
 
+        if (port <= 0) {
+            System.out.println("Error: port invalid");
+            return;
+        }
       
         DatagramSocket socket = new DatagramSocket(port);
         byte[] buffer = new byte[1024];
@@ -28,7 +34,7 @@ public class Server{
             socket.receive(entryPackage);
             System.out.println("Paquet rebut");
 
-            String missatge = new String(entryPackage.getData(),0,entryPackage.getLength().trim());
+            String missatge = new String(entryPackage.getData(),0,entryPackage.getLength());
             int valor = Integer.parseInt(missatge);
             String answer;
 
@@ -36,9 +42,9 @@ public class Server{
             if(comptador >= 10)
                 throw new Exception("Error memoria plena."); 
             else
-                throw new Exception("Valor Invalid."); /
+                throw new Exception("Valor Invalid."); 
             } else{ 
-                valor[comptador] = valor;
+                temp[comptador] = valor;
                 comptador++;
 
                
@@ -72,7 +78,7 @@ public class Server{
                 StringBuilder algo2 = new StringBuilder();
                 String conversion;
                 // parecido al feof o fgets en C
-                while((conversion = algo.readline() != null)){
+                while((conversion = algo.readLine()) != null){
                     algo2.append(conversion).append("\n");
                 }
                 algo.close();
@@ -89,7 +95,7 @@ public class Server{
             int portClient = entryPackage.getPort();
             DatagramPacket paquetSortida = new DatagramPacket(respostaBytes, respostaBytes.length, adrecaClient, portClient); //lo que se envia al cliente
             socket.send(paquetSortida);
-
+            socket.close();
             System.out.println("Resposta enviada satisfactoriament");
         }
         
